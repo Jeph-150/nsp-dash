@@ -1,0 +1,7 @@
+modules = ["cpp-clang14", "python-base-3.13"]
+run = "run nsp-dash "
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "run nsp-dash "]
