@@ -1,5 +1,8 @@
-run = "python3 main.py"
+run = "python3 pinging.py"
 
 [nix]
 channel = "stable-24_05"
-packages = ["flask", "python3"]
+packages = ["python3"]
+
+[deployment]
+run = "python3 pinging.py"

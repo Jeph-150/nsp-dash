@@ -6,16 +6,15 @@ mock_responses = {
   "203.0.113.1": 0.087       # 87ms
 }
 
-print('-' * 60)
+def track_dev(ip):
+    response = mock_responses.get(ip)
+    if response is None:
+        return {"ip": ip, "status": "offline", "response_time": None}
+    return {'IP': ip, "status": "online", "response_time": response}
 
+print('-' * 60)
 ip = input("Enter IP to ping: ")
-result = mock_responses.get(ip)
-
-# Handle the mock result
-if result is None:
-    print(f"{ip} is unreachable.")
-else:
-    print(f"{ip} is reachable. Response time: {result * 1000:.2f} ms")
-
+result = track_dev(ip)
+print(result)
 print('-' * 60)
-input('Press ENTER to exit')
+
