@@ -1,20 +1,14 @@
-# using mock responses to simulate pinging due to network restrictions
-mock_responses = {
-  "192.168.0.1": 0.034,      # 34ms
-  "8.8.8.8": 0.012,          # 12ms
-  "10.0.0.1": None,          # unreachable
-  "203.0.113.1": 0.087       # 87ms
-}
+# Import modules
+import os
+import ipaddress
 
-def track_dev(ip):
-    response = mock_responses.get(ip)
-    if response is None:
-        return {"ip": ip, "status": "offline", "response_time": None}
-    return {'IP': ip, "status": "online", "response_time": response}
+# My subnet
+network = ipaddress.ip_network("172.21.18.0/24", strict=False)
 
-print('-' * 60)
-ip = input("Enter IP to ping: ")
-result = track_dev(ip)
-print(result)
-print('-' * 60)
-
+# Loop through out the whole subnet while sending package to each IP's
+for ip in network.hosts():  # .hosts() skips .0 and .255
+    response = os.system(f"ping -n 1 -w 100 {ip}")  # send 1 ping packet and wait for 100 ms
+    if response == 0:
+        print(f"{ip} is up!")
+    else:
+       print(f"{ip} is down.")
